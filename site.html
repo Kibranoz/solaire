@@ -31,6 +31,13 @@ Date:
 <button onclick="ask()">Envoyer</button>
 <p id = "aaa"></p>
 </div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8325539719050971",
+    enable_page_level_ads: true
+  });
+</script>
 <script>
 var map;
      function initMap() {
@@ -58,7 +65,7 @@ if (this.readyState == 4 && this.status == 200) {
   var responseObject = JSON.parse(this.responseText);
 document.getElementById("aaa").innerHTML = "Levée du soleil :"+responseObject.results.sunrise+"<br> Coucher du soleil :"+responseObject["results"]["sunset"]+"<br>"+
 "Midi solaire :"+responseObject.results.solar_noon+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>";
-//faire un bouton plus tard pour ajouter le json 
+//faire un bouton plus tard pour ajouter le json
 }
 };
 xhttp.open("GET", "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+long+"&date="+date, true);
