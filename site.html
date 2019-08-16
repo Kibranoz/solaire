@@ -57,7 +57,8 @@ xhttp.onreadystatechange = function(){
 if (this.readyState == 4 && this.status == 200) {
   var responseObject = JSON.parse(this.responseText);
 document.getElementById("aaa").innerHTML = "Levée du soleil :"+responseObject.results.sunrise+"<br> Coucher du soleil :"+responseObject["results"]["sunset"]+"<br>"+
-"Midi solaire :"+responseObject.results.solar_noon+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>"+this.responseText;
+"Midi solaire :"+responseObject.results.solar_noon+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>";
+//faire un bouton plus tard pour ajouter le json 
 }
 };
 xhttp.open("GET", "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+long+"&date="+date, true);
