@@ -10,6 +10,9 @@ div{
 div #down {
   float:up;
 }
+#utc{
+  visibility: hidden;
+}
 @media (max-width:640px) {
   #map {
     height:60%;
@@ -22,7 +25,7 @@ div #down {
 <meta charset="utf-8">
 <div id="map"></div>
 <div id="down">
-Latutude :
+Latitude :
 <input type="text" id="latitude"></input>
 Longitude;
 <input type="text" id="longitude"></input>
@@ -30,6 +33,7 @@ Date:
 <input type = "date" min = "1989-12-31" max = "2100-12-31" id="date"></input>
 <button onclick="ask()">Envoyer</button>
 <p id = "aaa"></p>
+<div id = "utc"></div>
 </div>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -55,23 +59,50 @@ var map;
         long.value = map.getCenter().lng();
       });
      }
-function ask(){
+function ask() {
 var date = document.getElementById("date").value
+var dateDate = new Date(date);
 var lat = document.getElementById("latitude").value;
 var long = document.getElementById("longitude").value;
+var epoch = dateDate.getTime();
+timeZoneRequest = new XMLHttpRequest();
+timeZoneRequest.onreadystatechange = function(){
+  if (this.readyState == 4 && this.status == 200) {
+    var timeZoneresponseObject = JSON.parse(this.responseText);
+    var utcOffset = ((Number(timeZoneresponseObject["dstOffset"]) + Number(timeZoneresponseObject["rawOffset"]))/3600);
+    document.getElementById("utc").innerHTML = utcOffset;
+  }
+//alert("https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp="+epoch+"&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
+}
+timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331766000&language=es&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
+timeZoneRequest.send();
+
+
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
 if (this.readyState == 4 && this.status == 200) {
+  var utcOffset = Number(document.getElementById("utc").innerHTML);
   var responseObject = JSON.parse(this.responseText);
-document.getElementById("aaa").innerHTML = "Levée du soleil :"+responseObject.results.sunrise+"<br> Coucher du soleil :"+responseObject["results"]["sunset"]+"<br>"+
-"Midi solaire :"+responseObject.results.solar_noon+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>";
+  var sunrise = responseObject.results.sunrise;
+  var sunset = responseObject.results.sunset;
+  var midiSolaire = responseObject.results.solar_noon;
+  var toUpdate = [sunrise.toString(), sunset.toString(), midiSolaire.toString()];
+  var updated = [];
+  for (i in toUpdate){
+    toUpdate[i] = toUpdate[i].split(":");
+    updated[i] = (parseInt(toUpdate[i][0],10) + utcOffset)+":"+toUpdate[i][1]+":"+toUpdate[i][2];
+    toUpdate[i][0] = toUpdate[i][0].toString();
+  };
+document.getElementById("aaa").innerHTML = "Levée du soleil :"+updated[0] +"<br> Coucher du soleil :"+updated[1]+"<br>"+
+"Midi solaire :"+updated[2]+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>";
 //faire un bouton plus tard pour ajouter le json
 }
-};
+}
 xhttp.open("GET", "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+long+"&date="+date, true);
 xhttp.send();
 };
 </script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw&callback=initMap"
     async defer></script>
 </html>
