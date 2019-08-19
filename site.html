@@ -46,7 +46,7 @@ Date:
 var map;
      function initMap() {
        map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: 49.8, lng: -74},
+         center: {lat: 49.7971593, lng: -74.3327988},
          zoom: 15
        });
       bounds = new google.maps.LatLngBounds();
@@ -74,7 +74,7 @@ timeZoneRequest.onreadystatechange = function(){
   }
 //alert("https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp="+epoch+"&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
 }
-timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331766000&language=es&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
+timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331161200&language=es&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
 timeZoneRequest.send();
 
 
