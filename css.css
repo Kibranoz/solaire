@@ -11,6 +11,7 @@ header {
 
 .sunmoon {
   text-align: center;
+  width:25px;
   animation-name: magnify;
   animation-timing-function:ease-in-out;
   animation-iteration-count: infinite;
