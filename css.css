@@ -1,0 +1,64 @@
+header {
+  background-color: #42b9f5;
+  text-align: center;
+  color:white;
+  font-family: 'Pacifico', cursive;
+  height:40px;
+  font-size:25px;
+  animation-name: shashay;
+  animation-duration: 5s
+}
+
+.sunmoon {
+  text-align: center;
+  animation-name: magnify;
+  animation-timing-function:ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 3s
+}
+#sun.sunmoon {
+  text-align: center;
+  animation-name: magnify;
+  animation-direction: alternate-reverse;
+}
+#moon.sunmoon {
+  text-align: center;
+  animation-name: magnify;
+  animation-direction: alternate;
+}
+@keyframes shashay{
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: #42b9f5;
+  }
+}
+@keyframes magnify {
+  from {
+    font-size: 0px;
+  }
+  to {
+    font-size:20px;
+  }
+
+
+}
+other {
+  font-family: 'Pacifico', cursive;
+}
+@media (max-width:640px) {
+  header{
+  height:20px;
+  font-size:12px;
+}
+@keyframes magnify {
+  from {
+    font-size: 0px;
+  }
+  to {
+    font-size:10px;
+  }
+
+}
+}
