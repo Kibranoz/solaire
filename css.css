@@ -37,7 +37,7 @@ header {
 }
 @keyframes magnify {
   from {
-    font-size: 0px;
+    font-size: 1px;
   }
   to {
     font-size:20px;
@@ -55,7 +55,7 @@ other {
 }
 @keyframes magnify {
   from {
-    font-size: 0px;
+    font-size: 1px;
   }
   to {
     font-size:10px;
