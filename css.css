@@ -50,15 +50,15 @@ other {
 }
 @media (max-width:640px) {
   header{
-  height:20px;
-  font-size:12px;
+  height:30px;
+  font-size:15px;
 }
 @keyframes magnify {
   from {
     font-size: 1px;
   }
   to {
-    font-size:10px;
+    font-size:15px;
   }
 
 }
