@@ -87,8 +87,8 @@ timeZoneRequest.send();
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
 if (this.readyState == 4 && this.status == 200) {
-  var utcOffset = Number(document.getElementById("utc").innerHTML);
-  alert(utcOffset);
+  var timeZoneresponseObject = JSON.parse(this.responseText);
+  var utcOffset = ((Number(timeZoneresponseObject["dstOffset"]) + Number(timeZoneresponseObject["rawOffset"]))/3600);
   var responseObject = JSON.parse(this.responseText);
   var sunrise = responseObject.results.sunrise;
   var sunset = responseObject.results.sunset;
@@ -109,7 +109,9 @@ xhttp.open("GET", "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+long+"&
 xhttp.send();
 };
 </script>
-
+<script src="https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331161200&key=AIzaSyDi5h0MZGXQKzQRcyH9HjUsRbi_qihE8tk"
+    async defer></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw&callback=initMap"
     async defer></script>
+
 </html>
