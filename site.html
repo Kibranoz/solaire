@@ -75,12 +75,12 @@ timeZoneRequest.onreadystatechange = function(){
   if (this.readyState == 4 && this.status == 200) {
     var timeZoneresponseObject = JSON.parse(this.responseText);
     var utcOffset = ((Number(timeZoneresponseObject["dstOffset"]) + Number(timeZoneresponseObject["rawOffset"]))/3600);
-    alert(utcOffset);
+    alert(this.responseText);
     document.getElementById("utc").innerHTML = utcOffset;
   }
 //alert("https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp="+epoch+"&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
 }
-timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331766000&language=es&key=AIzaSyDi5h0MZGXQKzQRcyH9HjUsRbi_qihE8tk");
+timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331766000&language=en&key=AIzaSyDi5h0MZGXQKzQRcyH9HjUsRbi_qihE8tk");
 timeZoneRequest.send();
 
 
