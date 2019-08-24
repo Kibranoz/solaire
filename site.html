@@ -86,6 +86,7 @@ xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
 if (this.readyState == 4 && this.status == 200) {
   var utcOffset = Number(document.getElementById("utc").innerHTML);
+  alert(utcOffset);
   var responseObject = JSON.parse(this.responseText);
   var sunrise = responseObject.results.sunrise;
   var sunset = responseObject.results.sunset;
