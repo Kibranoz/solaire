@@ -1,0 +1,114 @@
+<html>
+<style>
+#map {
+  height:75%;
+  width:100%;
+  background-color:#dcfaf9;
+}
+div{
+  float:left;
+}
+div #down {
+  float:up;
+}
+#utc{
+  visibility: hidden;
+}
+@media (max-width:640px) {
+  #map {
+    height:60%;
+    width:100%;
+}
+
+  }
+</style>
+<link rel="stylesheet" type="text/css" href="css.css">
+<link href="https://fonts.googleapis.com/css?family=Aldrich|Pacifico&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="utf-8">
+<header><div id = "sun" class="sunmoon">☀️</div>  <div id = "moon" class="sunmoon">🌙</div>Heures de lever et coucher du soleil </header>
+<div id="map"></div>
+<div id="down">
+Latitude :
+<input type="text" id="latitude"></input><br>
+Longitude;
+<input type="text" id="longitude"></input><br>
+Date:
+<input type = "date" min = "1989-12-31" max = "2100-12-31" id="date"></input>
+<button onclick="ask()">Envoyer</button>
+<p id = "aaa"></p>
+<div id = "utc"></div>
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8325539719050971",
+    enable_page_level_ads: true
+  });
+</script>
+<script>
+var map;
+     function initMap() {
+       map = new google.maps.Map(document.getElementById('map'), {
+         center: {lat: 49.7971593, lng: -74.3327988},
+         zoom: 15
+       });
+      bounds = new google.maps.LatLngBounds();
+      var lat = document.getElementById("latitude")
+      lat.value = map.getCenter().lat()
+      var long = document.getElementById("longitude");
+      long.value = map.getCenter().lng();
+      map.addListener('center_changed', function(){
+        lat.value = map.getCenter().lat();
+        long.value = map.getCenter().lng();
+      });
+     }
+function ask() {
+var date = document.getElementById("date").value
+var dateDate = new Date(date);
+alert
+var lat = document.getElementById("latitude").value;
+var long = document.getElementById("longitude").value;
+var epoch = dateDate.getTime();
+timeZoneRequest = new XMLHttpRequest(); //qui l'envoie
+timeZoneRequest.onreadystatechange = function(){
+  if (this.readyState == 4 && this.status == 200) {
+    var timeZoneresponseObject = JSON.parse(this.responseText);
+    var utcOffset = ((Number(timeZoneresponseObject["dstOffset"]) + Number(timeZoneresponseObject["rawOffset"]))/3600);
+    document.getElementById("utc").innerHTML = utcOffset;
+  }
+//alert("https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp="+epoch+"&key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw");
+}
+timeZoneRequest.open("GET", "https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+long+"&timestamp=1331766000&language=en&key=AIzaSyDi5h0MZGXQKzQRcyH9HjUsRbi_qihE8tk");
+timeZoneRequest.send();
+
+
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){
+if (this.readyState == 4 && this.status == 200) {
+  var utcOffset = Number(document.getElementById("utc").innerHTML);
+  alert(utcOffset);
+  var responseObject = JSON.parse(this.responseText);
+  var sunrise = responseObject.results.sunrise;
+  var sunset = responseObject.results.sunset;
+  var midiSolaire = responseObject.results.solar_noon;
+  var toUpdate = [sunrise.toString(), sunset.toString(), midiSolaire.toString()];
+  var updated = [];
+  for (i in toUpdate){
+    toUpdate[i] = toUpdate[i].split(":");
+    updated[i] = (parseInt(toUpdate[i][0],10) + utcOffset)+":"+toUpdate[i][1]+":"+toUpdate[i][2];
+    toUpdate[i][0] = toUpdate[i][0].toString();
+  };
+document.getElementById("aaa").innerHTML = "Levée du soleil :"+updated[0] +"<br> Coucher du soleil :"+updated[1]+"<br>"+
+"Midi solaire :"+updated[2]+"<br>"+"Durée d'une journée"+responseObject.results.day_length+"<br>";
+//faire un bouton plus tard pour ajouter le json
+}
+}
+xhttp.open("GET", "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+long+"&date="+date, true);
+xhttp.send();
+};
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARE2dwCgddraPy2MtjXcB8GQFxW6g9XQw&callback=initMap"
+    async defer></script>
+</html>
