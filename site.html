@@ -73,6 +73,7 @@ timeZoneRequest = new XMLHttpRequest();
 timeZoneRequest.onreadystatechange = function(){
   if (this.readyState == 4 && this.status == 200) {
     var timeZoneresponseObject = JSON.parse(this.responseText);
+    alert(timeZoneresponseObject);
     var utcOffset = ((Number(timeZoneresponseObject["dstOffset"]) + Number(timeZoneresponseObject["rawOffset"]))/3600);
     document.getElementById("utc").innerHTML = utcOffset;
   }
